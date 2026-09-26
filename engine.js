@@ -247,7 +247,47 @@ function renderRail() {
     '<button class="navitem' + (S.view === 'activity' ? ' active' : '') + '" data-nav="activity"><span class="ni-ico">◉</span><span class="ni-label">Activity &amp; audit</span>' +
       (S.pending.length ? '' : '') + '</button>';
   $('#railMain').innerHTML = nav + universal;
-  $$('#railMain .navitem').forEach(b => b.addEventListener('click', () => {
+  // Phone: the same five rooms become a thumb bar. We CLONE the rail's buttons rather
+  // than define the nav twice, so there is still exactly one place that knows the rooms.
+  const bar = $('#mobileBar');
+  if (bar) {
+    bar.innerHTML = '';
+    ['inbox', 'chat', 'automations', 'apps'].forEach(v => {
+      const src = document.querySelector('#railMain .navitem[data-nav="' + v + '"]');
+      if (src) bar.appendChild(src.cloneNode(true));
+    });
+    const more = document.createElement('button');
+    more.className = 'navitem' + (S.mobileMore ? ' active' : '');
+    more.setAttribute('data-act', 'moreSheet');
+    more.innerHTML = '<span class="ni-ico">\u22ef</span><span class="ni-label">More</span>';
+    bar.appendChild(more);
+  }
+  const sheet = $('#mobileSheet');
+  if (sheet) {
+    if (!S.mobileMore) { sheet.innerHTML = ''; sheet.hidden = true; }
+    else {
+      let h = '<div class="p-sec">Everywhere else</div><div class="sheet-grid">';
+      ['skills', 'activity', 'changes', 'estate', 'team'].forEach(v => {
+        const src = document.querySelector('#railMain .navitem[data-nav="' + v + '"]');
+        if (src) h += src.outerHTML;
+      });
+      h += '</div><div class="p-sec">Signed in as</div><div class="sheet-grid">';
+      document.querySelectorAll('#roleMenuList .menu-item').forEach(mi => {
+        h += '<button class="navitem" data-wb="' + mi.getAttribute('data-wb') + '"><span class="ni-label">' + mi.innerText.split('\n')[0] + '</span></button>';
+      });
+      h += '</div><button class="btn xs" data-act="moreClose">Close</button>';
+      sheet.innerHTML = h; sheet.hidden = false;
+      $$('#mobileSheet [data-nav]').forEach(b => b.addEventListener('click', () => { S.view = b.getAttribute('data-nav'); S.item = null; S.mobileMore = false; renderAll(); }));
+      $$('#mobileSheet [data-wb]').forEach(b => b.addEventListener('click', () => {
+        const src = document.querySelector('#roleMenuList .menu-item[data-wb="' + b.getAttribute('data-wb') + '"]');
+        S.mobileMore = false; if (src) src.click(); else renderAll();
+      }));
+      $$('#mobileSheet [data-act="moreClose"]').forEach(b => b.addEventListener('click', () => { S.mobileMore = false; renderAll(); }));
+    }
+  }
+  $$('#mobileBar [data-act="moreSheet"]').forEach(b => b.addEventListener('click', () => { S.mobileMore = !S.mobileMore; renderAll(); }));
+  $$('#railMain .navitem, #mobileBar .navitem').forEach(b => b.addEventListener('click', () => {
+    if (!b.getAttribute('data-nav')) return;
     S.view = b.getAttribute('data-nav'); S.item = null;
     if (S.view !== 'activity' && S.view !== 'skills') chainPush('workbench.nav.opened', 'user:' + S.wb.identity.name.toLowerCase().replace(' ', '.'), 'nav=' + S.view, 'info');
     renderAll();

@@ -401,3 +401,25 @@ section.w.focused { outline: 1px solid var(--accent); outline-offset: 2px; }
   #rail { height: auto !important; min-height: 0 !important; max-height: 128px; overflow: hidden; overflow-y: auto; }
   #railMain { height: auto !important; }
 }
+/* ---- phone: a bottom tab bar, the standard thumb pattern ------------------ */
+.mobile-bar, .mobile-sheet { display: none; }
+@media (max-width: 980px) {
+  #rail { display: none !important; }              /* the top strip retires */
+  #shell { padding-bottom: 74px; }
+  #mobileBar { display: flex !important; position: fixed; left: 0; right: 0; bottom: 0; z-index: 60;
+      justify-content: space-between; gap: 2px; padding: 5px 6px calc(5px + env(safe-area-inset-bottom));
+      background: var(--card); border-top: 1px solid var(--border); }
+  #mobileBar .navitem { flex: 1 1 0 !important; width: auto !important; max-width: none !important;
+      flex-direction: column !important; align-items: center !important; justify-content: center !important;
+      gap: 2px !important; min-height: 48px !important; padding: 4px 2px !important; }
+  #mobileBar .navitem .ni-label { display: block !important; font-size: 10px !important; line-height: 1.1 !important; }
+  #mobileBar .navitem .ni-ico { font-size: 15px !important; }
+  #mobileSheet { display: block; position: fixed; left: 0; right: 0; bottom: 66px; z-index: 61;
+      max-height: 56vh; overflow-y: auto; padding: 10px 12px calc(10px + env(safe-area-inset-bottom));
+      background: var(--card); border-top: 1px solid var(--border); }
+  #mobileSheet[hidden] { display: none !important; }
+  .sheet-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 6px; margin-bottom: 10px; }
+  #mobileSheet .navitem { display: flex !important; width: 100% !important; min-height: 44px !important;
+      align-items: center !important; text-align: left; }
+  #mobileSheet .navitem .ni-label { display: inline !important; }
+}
