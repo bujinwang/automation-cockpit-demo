@@ -386,3 +386,18 @@ section.w.focused { outline: 1px solid var(--accent); outline-offset: 2px; }
   #roleSwitch, .btn, .btn.xs, [data-act="appsTab"] { min-height: 40px; }
   .tour, .tour-card, .tour-k, .tour-h { width: auto; max-width: 92vw; }
 }
+/* ---- narrow screens, final: the property I never set ---------------------- */
+/* Diagnosed from the live DOM: the containers were already flex/row, but every
+   nav item was width:423px (the mobile "full-width tap row" rule). Nine 423px
+   items in a wrapping row is nine rows -- a column of icons. With width:auto
+   they finally sit side by side. */
+@media (max-width: 980px) {
+  #rail [data-nav], #rail .navitem, #rail .rail-item,
+  #railMain [data-nav], #railMain .navitem {
+    width: auto !important; max-width: none !important; flex: 0 0 auto !important;
+    display: inline-flex !important; align-items: center !important;
+    min-height: 42px !important; white-space: nowrap !important; margin: 2px 3px !important;
+  }
+  #rail { height: auto !important; min-height: 0 !important; max-height: 128px; overflow: hidden; overflow-y: auto; }
+  #railMain { height: auto !important; }
+}
