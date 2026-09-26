@@ -423,3 +423,23 @@ section.w.focused { outline: 1px solid var(--accent); outline-offset: 2px; }
       align-items: center !important; text-align: left; }
   #mobileSheet .navitem .ni-label { display: inline !important; }
 }
+/* ---- phone, part 8: the bar and sheet have to be opaque and out of the way --- */
+@media (max-width: 980px) {
+  #mobileBar { z-index: 80 !important; background: var(--bg, #0e1014) !important;
+      border-top: 1px solid var(--border) !important; box-shadow: 0 -6px 18px rgba(0,0,0,.45) !important;
+      padding: 4px 4px calc(4px + env(safe-area-inset-bottom)) !important; align-items: stretch; }
+  #mobileBar .navitem { flex-direction: row !important; gap: 5px !important; min-height: 46px !important;
+      padding: 3px 2px !important; overflow: hidden; }
+  #mobileBar .navitem .ni-label { display: inline !important; font-size: 11px !important; line-height: 1.15 !important;
+      white-space: nowrap !important; overflow: hidden; text-overflow: ellipsis; max-width: 66px; }
+  #mobileBar .navitem .ni-ico { font-size: 13px !important; }
+  #mobileBar .navitem .badge, #mobileBar .navitem [class*="count"] { font-size: 9px !important; padding: 0 3px !important; }
+  #mobileSheet { z-index: 81 !important; background: var(--bg, #0e1014) !important;
+      border-top: 1px solid var(--border) !important; box-shadow: 0 -10px 30px rgba(0,0,0,.55) !important;
+      bottom: 62px !important; }
+  #mobileSheet .sheet-grid { grid-template-columns: 1fr !important; }
+  #mobileSheet .navitem .ni-label { white-space: nowrap !important; overflow: hidden; text-overflow: ellipsis; }
+  #canvas, #panel, #widgetGrid { padding-bottom: 86px !important; }
+  .composer, [data-askinput], [data-asksend] { position: static !important; }
+  .composer, .chat-composer, form[class*="composer"] { margin-bottom: 78px !important; }
+}

@@ -273,7 +273,10 @@ function renderRail() {
       });
       h += '</div><div class="p-sec">Signed in as</div><div class="sheet-grid">';
       document.querySelectorAll('#roleMenuList .menu-item').forEach(mi => {
-        h += '<button class="navitem" data-wb="' + mi.getAttribute('data-wb') + '"><span class="ni-label">' + mi.innerText.split('\n')[0] + '</span></button>';
+        const _el = mi.firstElementChild;
+        let _nm = String((_el && _el.innerText) ? _el.innerText : (mi.innerText || '')).split(/[\n\u00b7\u2014]/)[0].trim();
+        if (!_nm || _nm.length > 24) _nm = String(mi.getAttribute('data-wb') || '').replace(/_/g, ' ').replace(/\b\w/g, function (ch) { return ch.toUpperCase(); });
+        h += '<button class="navitem" data-wb="' + mi.getAttribute('data-wb') + '"><span class="ni-label">' + _nm + '</span></button>';
       });
       h += '</div><button class="btn xs" data-act="moreClose">Close</button>';
       sheet.innerHTML = h; sheet.hidden = false;
