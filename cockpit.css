@@ -443,3 +443,10 @@ section.w.focused { outline: 1px solid var(--accent); outline-offset: 2px; }
   .composer, [data-askinput], [data-asksend] { position: static !important; }
   .composer, .chat-composer, form[class*="composer"] { margin-bottom: 78px !important; }
 }
+/* ---- phone, part 9: the context panel must not cover the tab bar ---------- */
+@media (max-width: 980px) {
+  #panel { bottom: 62px !important; top: auto !important; max-height: 62vh !important; height: auto !important;
+      z-index: 70 !important; box-shadow: 0 -8px 26px rgba(0,0,0,.5) !important; border-top-left-radius: 10px; border-top-right-radius: 10px; }
+  #mobileBar { z-index: 90 !important; }
+  #mobileSheet { z-index: 91 !important; }
+}
