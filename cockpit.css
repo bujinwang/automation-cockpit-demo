@@ -450,3 +450,18 @@ section.w.focused { outline: 1px solid var(--accent); outline-offset: 2px; }
   #mobileBar { z-index: 90 !important; }
   #mobileSheet { z-index: 91 !important; }
 }
+/* ---- phone, part 10: stack the tab, so the label has the whole width ------ */
+/* Before: icon beside a 66px-capped label with a badge in the same row -> "My ...".
+   Standard bottom bars stack them; the label then gets the full tab width. */
+@media (max-width: 980px) {
+  #mobileBar .navitem { position: relative !important; flex-direction: column !important; gap: 1px !important;
+      min-height: 54px !important; padding: 4px 1px !important; overflow: visible !important; }
+  #mobileBar .navitem .ni-ico { font-size: 14px !important; line-height: 1 !important; }
+  #mobileBar .navitem .ni-label { display: block !important; width: 100% !important; max-width: none !important;
+      text-align: center !important; font-size: 10px !important; letter-spacing: -0.2px !important;
+      line-height: 1.1 !important; white-space: nowrap !important; overflow: visible !important; text-overflow: clip !important; }
+  /* the count rides with the icon instead of competing with the label */
+  #mobileBar .navitem > *:not(.ni-ico):not(.ni-label) { position: absolute !important; top: 2px !important;
+      right: calc(50% - 30px) !important; font-size: 9px !important; padding: 0 3px !important; }
+}
+@media (max-width: 400px) { #mobileBar .navitem .ni-label { font-size: 9px !important; letter-spacing: -0.3px !important; } }
