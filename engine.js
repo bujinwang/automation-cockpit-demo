@@ -275,6 +275,9 @@ function renderRail() {
       document.querySelectorAll('#roleMenuList .menu-item').forEach(mi => {
         const _el = mi.firstElementChild;
         let _nm = String((_el && _el.innerText) ? _el.innerText : (mi.innerText || '')).split(/[\n\u00b7\u2014]/)[0].trim();
+        // the menu item concatenates its name and its subtitle with no separator
+        // ("AP ClerkAccounts Payable"), so cut at the first lower-then-upper seam.
+        _nm = _nm.replace(/([a-z])([A-Z])/, '$1|$2').split('|')[0].trim();
         if (!_nm || _nm.length > 24) _nm = String(mi.getAttribute('data-wb') || '').replace(/_/g, ' ').replace(/\b\w/g, function (ch) { return ch.toUpperCase(); });
         h += '<button class="navitem" data-wb="' + mi.getAttribute('data-wb') + '"><span class="ni-label">' + _nm + '</span></button>';
       });
