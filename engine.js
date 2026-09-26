@@ -278,6 +278,8 @@ function renderRail() {
         // the menu item concatenates its name and its subtitle with no separator
         // ("AP ClerkAccounts Payable"), so cut at the first lower-then-upper seam.
         _nm = _nm.replace(/([a-z])([A-Z])/, '$1|$2').split('|')[0].trim();
+        // an acronym subtitle ("CTOOffice of the CTO") has no lower-then-upper seam
+        _nm = _nm.replace(/([A-Z]{2,})(?=[A-Z][a-z])/, '$1|').split('|')[0].trim();
         if (!_nm || _nm.length > 24) _nm = String(mi.getAttribute('data-wb') || '').replace(/_/g, ' ').replace(/\b\w/g, function (ch) { return ch.toUpperCase(); });
         h += '<button class="navitem" data-wb="' + mi.getAttribute('data-wb') + '"><span class="ni-label">' + _nm + '</span></button>';
       });
