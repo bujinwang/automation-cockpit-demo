@@ -1,0 +1,95 @@
+<!doctype html>
+<html lang="en" data-accent="amber" data-density="comfortable">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Automation Cockpit — Workbench Demo</title>
+<link rel="stylesheet" href="cockpit.css">
+</head>
+<body>
+
+<!-- ============ BOOT ============ -->
+<div id="boot">
+  <div class="boot-mark">◧</div>
+  <div class="boot-title">Automation Cockpit</div>
+  <div class="boot-sub" id="boot-sub">Booting workbench…</div>
+</div>
+
+<!-- ============ SHELL ============ -->
+<div id="shell" class="shell" hidden>
+
+  <!-- Region 0: fleet kill switch. Empty and hidden while the fleet is running; the shell
+       only gives it a row while a halt is armed, and engine.js fills it from the record. -->
+  <div class="haltbar" id="haltBar" hidden></div>
+
+  <!-- Region 1: top bar -->
+  <header class="topbar">
+    <div class="brand">
+      <span class="brand-mark">◧</span>
+      <span class="brand-name">ACME</span>
+      <span class="brand-prod">Automation Cockpit</span>
+    </div>
+
+    <button class="role-switch" id="roleSwitch" aria-haspopup="true" aria-expanded="false">
+      <span class="role-dot" id="roleDot"></span>
+      <span class="role-label" id="roleLabel">Workbench</span>
+      <span class="role-caret">▾</span>
+    </button>
+
+    <div class="searchbox">
+      <span class="search-ico">⌕</span>
+      <input id="globalSearch" type="text" placeholder="Search this workbench…" autocomplete="off">
+    </div>
+
+    <div class="topright">
+      <button class="iconbtn" id="attnPill" title="Waiting on you">
+        <span class="attn-dot"></span><span id="attnCount">0</span>
+      </button>
+      <button class="iconbtn" id="resetBtn" title="Reset demo data">⟲</button>
+      <div class="identity" id="identity" title="Signed in via Entra ID (trusted header)">
+        <span class="avatar" id="avatar">—</span>
+        <span class="idmeta"><b id="idName">—</b><small id="idSub">—</small></span>
+      </div>
+    </div>
+
+    <!-- role switcher dropdown (data-driven) -->
+    <div class="menu" id="roleMenu" hidden><div class="menu-hd">Workbenches assigned to you</div><div id="roleMenuList"></div></div>
+  </header>
+
+  <!-- Region 2: left nav rail -->
+  <nav class="rail" id="rail">
+    <div class="rail-main" id="railMain"></div>
+    <div class="rail-foot" id="railFoot"></div>
+  </nav>
+
+  <!-- Region 3: center canvas -->
+  <main class="canvas" id="canvas">
+    <div class="wbhead" id="wbHead"></div>
+    <div class="grid" id="widgetGrid"></div>
+  </main>
+
+  <!-- Region 4: right context panel -->
+  <aside class="panel" id="panel">
+    <div class="panel-hd">
+      <span id="panelTitle">Context</span>
+      <button class="panel-x" id="panelClose" title="Close">✕</button>
+    </div>
+    <div class="panel-body" id="panelBody"></div>
+  </aside>
+
+  <!-- Region 5: status strip -->
+  <footer class="status">
+    <div class="status-state" id="stState"><span class="pulse"></span> <b>Idle</b></div>
+    <div class="status-last" id="stLast">No automation has run yet in this session.</div>
+    <div class="status-metrics" id="stMetrics"></div>
+  </footer>
+</div>
+
+<!-- toast + tour mount points -->
+<div id="toasts" class="toasts"></div>
+<div id="tour" class="tour" hidden></div>
+
+<script src="workbenches.js"></script>
+<script src="engine.js"></script>
+</body>
+</html>
