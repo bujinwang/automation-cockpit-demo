@@ -367,3 +367,22 @@ section.w.focused { outline: 1px solid var(--accent); outline-offset: 2px; }
 .wb-meta .skillq { flex: 1 1 240px; width: auto; min-width: 0; }
 .wb-meta .btn[data-act="addSkill"] { flex: 0 0 auto; font-weight: 650; border-color: var(--accent); color: var(--accent); }
 .wb-meta .btn[data-act="addSkill"]:hover { background: var(--accent); color: var(--bg, #10141b); }
+
+/* ---- narrow screens, take 3: stop fighting the grid ---------------------- */
+/* Measured at 440px: the shell kept a grid whose hidden rail still reserved a
+   column, so the canvas was narrower than the screen and the nav was gone. */
+@media (max-width: 980px) {
+  #shell { display: block !important; }
+  #rail { display: flex !important; flex-direction: row; flex-wrap: wrap; align-items: center;
+          gap: 6px; width: 100%; height: auto; position: sticky; top: 0; z-index: 40;
+          padding: 6px 8px 7px; border-bottom: 1px solid var(--border);
+          overflow-x: auto; -webkit-overflow-scrolling: touch; }
+  #railMain { display: flex; flex-direction: row; flex-wrap: wrap; align-items: center; gap: 6px; width: 100%; }
+  .navitem, .rail-item { display: flex; align-items: center; min-height: 42px; white-space: nowrap; flex: 0 1 auto; }
+  #railFoot { display: none !important; }
+  #canvas, #panel, #widgetGrid, .w, .w-body { width: auto; max-width: 100%; min-width: 0; }
+  footer.status, .status { flex-wrap: wrap; row-gap: 5px; height: auto; max-width: 100%; }
+  #stMetrics, .status-metrics { width: auto !important; min-width: 0 !important; flex-wrap: wrap; }
+  #roleSwitch, .btn, .btn.xs, [data-act="appsTab"] { min-height: 40px; }
+  .tour, .tour-card, .tour-k, .tour-h { width: auto; max-width: 92vw; }
+}
